@@ -2,12 +2,16 @@ from datetime import datetime
 import random
 import math
 
+#Tournament code is preliminary.
+#final version will contain code for exporting results
+
 #import bots here
 from AC33 import AC33
 from AC34 import AC34
 from AC43 import AC43
 from Rando import Rando
-bot_list=[AC33,AC34,AC43,Rando]
+from ExampleBot import ExampleBot
+bot_list=[AC33,AC34,AC43,Rando, ExampleBot]
 
 #fill list with bots
 def Setup(bot_list, init_copy, round_count):
