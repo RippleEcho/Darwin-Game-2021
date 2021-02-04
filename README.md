@@ -43,14 +43,17 @@ Turn scoring works as follows:
  
  *HOW TO SUBMIT A BOT*
  All I need is a python file with a function with correct inputs and outputs. 
+ 
  Inputs: Two lists of tuples (own_moves, opp_moves) with {move format: (claim, veto)}
+ 
  Output: One tuple with this turn's move {format: (claim, veto)}
-  See example bots for more clarity
-  Send me your code over discord in either .txt or .py files
+ 
+ See example bots for more clarity
+ Send me your code over discord in either .txt or .py files
  If you need help putting your bot together, ask around or let me know! 
-  If need be, send me a .txt file with the pseudo code. I won't write your bot for you, but I can work with you.
+ If need be, send me a .txt file with the pseudo code. I won't write your bot for you, but I can work with you.
   
-  Send this to me over discord preferably
+ Send this to me over discord preferably
  
  
  
