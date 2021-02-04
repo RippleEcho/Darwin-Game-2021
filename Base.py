@@ -11,7 +11,8 @@ from AC34 import AC34
 from AC43 import AC43
 from Rando import Rando
 from ExampleBot import ExampleBot
-bot_list=[AC33,AC34,AC43,Rando, ExampleBot]
+from Grudge import Grudge
+bot_list=[AC33,AC34,AC43,Rando, ExampleBot, Grudge]
 
 #fill list with bots
 def Setup(bot_list, init_copy, round_count):
