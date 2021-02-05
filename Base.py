@@ -6,13 +6,11 @@ import math
 #final version will contain code for exporting results
 
 #import bots here
-from AC33 import AC33
 from AC34 import AC34
-from AC43 import AC43
 from Rando import Rando
 from ExampleBot import ExampleBot
 from Grudge import Grudge
-bot_list=[AC33,AC34,AC43,Rando, ExampleBot, Grudge]
+bot_list=[AC34, Rando, ExampleBot, Grudge]
 
 #fill list with bots
 def Setup(bot_list, init_copy, round_count):
@@ -39,8 +37,12 @@ def Limit(move):
             if n<0:
                 n=0
         return move
+        #recover single int input
+    elif (type(move) is int):
+        return (move,0)
     else:
-        #do not recover non-tuples
+        #do not recover other non-tuples
+        print(str(move) + "non-tuple")
         return (0,0)
 
 def Match(A_bot, B_bot, turns_left):
@@ -133,6 +135,6 @@ def Judge (bot_list, bot_points, pool_size):
     return(bot_counts)
                 
                                   
-
+#Setup(bot_list,4,4)
 Setup(bot_list,256,256)
                                   
