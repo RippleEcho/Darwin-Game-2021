@@ -37,9 +37,15 @@ def Limit(move):
             if n<0:
                 n=0
         return move
+    
         #recover single int input
     elif (type(move) is int):
         return (move,0)
+
+        #recover list into tuple
+    elif (type(move) is list and type(move[0]) is int and type(move[1]) is int):
+        return (move[0],move[1])
+    
     else:
         #do not recover other non-tuples
         print(str(move) + "non-tuple")
