@@ -10,7 +10,8 @@ from AC34 import AC34
 from Rando import Rando
 from ExampleBot import ExampleBot
 from Grudge import Grudge
-bot_list=[AC34, Rando, ExampleBot, Grudge]
+from Piebot import Piebot
+bot_list=[AC34, Rando, ExampleBot, Grudge, Piebot]
 
 #fill list with bots
 def Setup(bot_list, init_copy, round_count):
