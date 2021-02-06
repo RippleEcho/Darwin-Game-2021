@@ -19,7 +19,7 @@ bot_list=[AC33, AC43, AC34, Ran34, Rando, ExampleBot, Grudge, Piebot]
 def Setup(bot_list, init_copy, round_count):
     
     #format file I/O
-    date=datetime.now().strftime('%Y-%m-%d-%H')
+    date=datetime.now().strftime('%Y-%m-%d')
     file=open(date+" Stats.txt" ,"a+")
     file.write(date)
     file.write("\n\n")
@@ -41,7 +41,7 @@ def Setup(bot_list, init_copy, round_count):
 
 
 def Write(round_num, bot_names, round_scores, bot_counts):
-    date=datetime.now().strftime('%Y-%m-%d-%H')
+    date=datetime.now().strftime('%Y-%m-%d')
 
     #Human-readable file layed out per round
     file=open(date+" Stats.txt" ,"a+")
