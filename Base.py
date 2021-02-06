@@ -3,18 +3,28 @@ import random
 import math
 
 #Tournament code is preliminary.
-#final version will contain code for exporting results
 
 #import bots here
 from AC34 import AC34
+from AC33 import AC33
+from AC43 import AC43
+from Ran34 import Ran34
 from Rando import Rando
 from ExampleBot import ExampleBot
 from Grudge import Grudge
 from Piebot import Piebot
-bot_list=[AC34, Rando, ExampleBot, Grudge, Piebot]
+bot_list=[AC33, AC43, AC34, Ran34, Rando, ExampleBot, Grudge, Piebot]
 
 #fill list with bots
 def Setup(bot_list, init_copy, round_count):
+    
+    #format file I/O
+    date=datetime.now().strftime('%Y-%m-%d-%H')
+    file=open(date+" Stats.txt" ,"a+")
+    file.write(date)
+    file.write("\n\n")
+    file.close()
+    
     #populate bot pool
     bot_counts=[]
     for i in range(len(bot_list)):
@@ -25,8 +35,43 @@ def Setup(bot_list, init_copy, round_count):
     for Rnd in range(round_count):
         round_score = Round(bot_list, bot_counts)
         bot_counts = Judge(bot_list, round_score, pool_size)
-        print(bot_counts)
-    #print(bot_counts)             
+        Write(Rnd, bot_list, round_score, bot_counts)
+        #print(bot_counts)
+    print(bot_counts)             
+
+
+def Write(round_num, bot_names, round_scores, bot_counts):
+    date=datetime.now().strftime('%Y-%m-%d-%H')
+
+    #Human-readable file layed out per round
+    file=open(date+" Stats.txt" ,"a+")
+    if(round_num ==0):
+        file.write(str(list(map(lambda x: x.__name__ , bot_list)))+"\n\n")
+    file.write("Round: "+str(round_num+1)+"\n")
+    file.write("Scores: "+str(round_scores)+"\n")
+    file.write("Copies: "+str(bot_counts)+"\n")
+    file.write("\n")
+    file.close()
+
+    #CSV file with round scores and copy numbers
+    file=open(date+" Stats.csv" ,"a+")
+    if(round_num ==0):
+        file.write("Round #,Score,")
+        for bot in bot_list:
+            file.write(str(bot.__name__)+",")
+        file.write(",Copies,")
+        for bot in bot_list:
+            file.write(str(bot.__name__)+",")
+        file.write("\n")
+    file.write(str(round_num)+","+str(sum(round_scores))+",")
+    for score in round_scores:
+        file.write(str(score)+",")
+    file.write(","+str(sum(bot_counts))+",")
+    for count in bot_counts:
+        file.write(str(count)+",")
+    file.write("\n")
+    file.close()
+        
     
 def Limit(move):
     #type check for tuple of ints
