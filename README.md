@@ -9,7 +9,7 @@ Simple bots compete over limited resources, balancing competition and cooperatio
 The tournament will place all bots into a free-for-all contest to determine which comes out on top
 It's a modified version of a modified version of the iterated prisoner's dillema 
 
-*HOW IT WORKS*
+**HOW IT WORKS**
 
 A Match consists of 128±16 Turns between two bots. 
 Each turn, 7 points are available to split between them.
@@ -19,10 +19,12 @@ The first integer is their claim on the point pool.
 The second integer is their veto for their opponent.
 For input, bots will have access to all moves for both bots made in this Match, and can act accordingly
 
-Turn scoring works as follows:
- 1) If the sum of the claims is greater than 7, BOTH bots score zero this turn
- 2) If a bot's claim matches it's oppnent's veto, that bot scores zero this turn
- 3) Otherwise, a bot will score its claim this turn
+**TURN SCORING**
+**THIS HAS BEEN REVISED SINCE FIRST DRAFT**
+Turn scoring is resolved in this order: 
+ 1) If the claim matches the opponent's veto, the claim is adjusted to zero. 
+ 2) If the sum of both claims is greater than 7, BOTH bots score zero this turn
+ 3) Otherwise, each bot will score its claim this turn
  
  Score accumulates over the match. 
  
@@ -41,7 +43,7 @@ Turn scoring works as follows:
  The winner is the bot with the most copies of itself at the end of the final round
  
  
- *HOW TO SUBMIT A BOT*
+ **HOW TO SUBMIT A BOT**
  All I need is a python file with a function with correct inputs and outputs. 
  
  Inputs: Two lists of tuples (own_moves, opp_moves) with {move format: (claim, veto)}
