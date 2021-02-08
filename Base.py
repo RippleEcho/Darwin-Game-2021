@@ -37,7 +37,7 @@ def Setup(bot_list, init_copy, round_count):
         round_score = Round(bot_list, bot_counts)
         bot_counts = Judge(bot_list, round_score, pool_size)
         Write(Rnd, bot_list, round_score, bot_counts)
-        #print(bot_counts)
+        #print(Rnd)
     print(bot_counts)             
 
 
@@ -71,8 +71,7 @@ def Write(round_num, bot_names, round_scores, bot_counts):
     for count in bot_counts:
         file.write(str(count)+",")
     file.write("\n")
-    file.close()
-        
+    file.close()     
     
 def Limit(move):
     #type check for tuple of ints
@@ -105,12 +104,10 @@ def Match(A_bot, B_bot, turns_left):
     B_moves=[]
     while (turns_left>0):
         turns_left -= 1
-        
+              
         A_move=Limit(A_bot(A_moves, B_moves))
         B_move=Limit(B_bot(B_moves, A_moves))
-<<<<<<< Updated upstream
-        #print(A_move)
-        #print(B_move)
+        
         #score round
         if(A_move[0] + B_move[0] < 8):
             #Check vetos
@@ -119,7 +116,6 @@ def Match(A_bot, B_bot, turns_left):
               
             if(B_move[0] != A_move[1]):
                 B_score += B_move[0]
-=======
 
         #Check sum   
         if(A_move[0] + B_move[0] < 8):
@@ -132,7 +128,6 @@ def Match(A_bot, B_bot, turns_left):
             if(B_move[0] != A_move[1]):
                 B_score += B_move[0]   
         
->>>>>>> Stashed changes
         #append move lists            
         A_moves.append(A_move)
         B_moves.append(B_move)
