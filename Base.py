@@ -74,24 +74,22 @@ def Write(round_num, bot_names, round_scores, bot_counts):
     file.close()     
     
 def Limit(move):
+    
+    #recover single int input
+    if (type(move) is int):
+        move=(move,0)
+    
     #type check for tuple of ints
-    if (type(move) is tuple and type(move[0]) is int and type(move[1]) is int):
+    if (type(move) is (tuple or list) and type(move[0]) is int and type(move[1]) is int):
         for n in move:
             #recover out of range ints
             if n>7:
                 n=7
             if n<0:
                 n=0
-        return move
-    
-        #recover single int input
-    elif (type(move) is int):
-        return (move,0)
-
-        #recover list into tuple
-    elif (type(move) is list and type(move[0]) is int and type(move[1]) is int):
+        #type correction for list
         return (move[0],move[1])
-    
+
     else:
         #do not recover other non-tuples
         print(str(move) + "non-tuple")
@@ -104,11 +102,14 @@ def Match(A_bot, B_bot, turns_left):
     B_moves=[]
     while (turns_left>0):
         turns_left -= 1
-              
+
+        #get bot moves based on existing move lists
         A_move=Limit(A_bot(A_moves, B_moves))
         B_move=Limit(B_bot(B_moves, A_moves))
         
         #score round
+        
+        #check sums (Sum-first scoring)
         if(A_move[0] + B_move[0] < 8):
             #Check vetos
             if(A_move[0] != B_move[1]):
@@ -116,21 +117,11 @@ def Match(A_bot, B_bot, turns_left):
               
             if(B_move[0] != A_move[1]):
                 B_score += B_move[0]
-
-        #Check sum   
-        if(A_move[0] + B_move[0] < 8):
-            
-            #Check vetos 
-            #score round
-            if(A_move[0] != B_move[1]):
-                A_score += A_move[0]
-                
-            if(B_move[0] != A_move[1]):
-                B_score += B_move[0]   
         
         #append move lists            
         A_moves.append(A_move)
         B_moves.append(B_move)
+        
     return(A_score, B_score)
                  
 def Round (bot_list, bot_counts): #
@@ -194,10 +185,7 @@ def Judge (bot_list, bot_points, pool_size):
                 bot_to_add=k
                 init_need=case_need
         bot_counts[bot_to_add]+=1
-        
-    return(bot_counts)
-                
-                                  
-#Setup(bot_list,4,4)
-Setup(bot_list,256,256)
+    return(bot_counts)                      
+Setup(bot_list,4,4)
+#Setup(bot_list,256,256)
                                   
