@@ -3,6 +3,7 @@ import random
 import math
 
 #Tournament code is preliminary.
+#Sum-first scoring
 
 #import bots here
 from AC34 import AC34
@@ -107,6 +108,7 @@ def Match(A_bot, B_bot, turns_left):
         
         A_move=Limit(A_bot(A_moves, B_moves))
         B_move=Limit(B_bot(B_moves, A_moves))
+<<<<<<< Updated upstream
         #print(A_move)
         #print(B_move)
         #score round
@@ -117,6 +119,20 @@ def Match(A_bot, B_bot, turns_left):
               
             if(B_move[0] != A_move[1]):
                 B_score += B_move[0]
+=======
+
+        #Check sum   
+        if(A_move[0] + B_move[0] < 8):
+            
+            #Check vetos 
+            #score round
+            if(A_move[0] != B_move[1]):
+                A_score += A_move[0]
+                
+            if(B_move[0] != A_move[1]):
+                B_score += B_move[0]   
+        
+>>>>>>> Stashed changes
         #append move lists            
         A_moves.append(A_move)
         B_moves.append(B_move)
