@@ -6,15 +6,11 @@ import math
 #Sum-first scoring
 
 #import bots here
-from AC34 import AC34
-from AC33 import AC33
-from AC43 import AC43
 from Ran34 import Ran34
-from Rando import Rando
 from ExampleBot import ExampleBot
 from Grudge import Grudge
 from Piebot import Piebot
-bot_list=[AC33, AC43, AC34, Ran34, Rando, ExampleBot, Grudge, Piebot]
+bot_list=[Ran34, ExampleBot, Grudge, Piebot]
 
 #fill list with bots
 def Setup(bot_list, init_copy, round_count):
@@ -39,7 +35,6 @@ def Setup(bot_list, init_copy, round_count):
         Write(Rnd, bot_list, round_score, bot_counts)
         #print(Rnd)
     print(bot_counts)             
-
 
 def Write(round_num, bot_names, round_scores, bot_counts):
     date=datetime.now().strftime('%Y-%m-%d')
@@ -107,8 +102,6 @@ def Match(A_bot, B_bot, turns_left):
         A_move=Limit(A_bot(A_moves, B_moves))
         B_move=Limit(B_bot(B_moves, A_moves))
         
-        #score round
-        
         #check sums (Sum-first scoring)
         if(A_move[0] + B_move[0] < 8):
             #Check vetos
@@ -160,7 +153,6 @@ def Judge (bot_list, bot_points, pool_size):
     if(sum(bot_points)==0):
         for i in range(len(bot_list)):
             bot_counts.append(int(pool_size/len(bot_list)))
-            #even distribution
             return(bot_counts)
         
     for j in range(len(bot_list)):
@@ -185,7 +177,8 @@ def Judge (bot_list, bot_points, pool_size):
                 bot_to_add=k
                 init_need=case_need
         bot_counts[bot_to_add]+=1
-    return(bot_counts)                      
-Setup(bot_list,4,4)
+    return(bot_counts)
+
+Setup(bot_list,64,64)
 #Setup(bot_list,256,256)
                                   
