@@ -6,11 +6,12 @@ import math
 #Sum-first scoring
 
 #import bots here
+from AC34 import AC34
 from Ran34 import Ran34
 from ExampleBot import ExampleBot
 from Grudge import Grudge
 from Piebot import Piebot
-bot_list=[Ran34, ExampleBot, Grudge, Piebot]
+bot_list=[ExampleBot, Grudge, Piebot, AC34, Ran34 ]
 
 #fill list with bots
 def Setup(bot_list, init_copy, round_count):
@@ -70,25 +71,22 @@ def Write(round_num, bot_names, round_scores, bot_counts):
     
 def Limit(move):
     
-    #recover single int input
-    if (type(move) is int):
-        move=(move,0)
+    #correct out of range ints
+    lim = lambda m: min(max(m,0),7)
     
-    #type check for tuple of ints
-    if (type(move) is (tuple or list) and type(move[0]) is int and type(move[1]) is int):
-        for n in move:
-            #recover out of range ints
-            if n>7:
-                n=7
-            if n<0:
-                n=0
-        #type correction for list
-        return (move[0],move[1])
+    #type check for tuple or list of ints
+    if (type(move) is tuple or list):
+        if(type(move[0]) is int and type(move[1]) is int):
+            for n in move:
+                n=lim(n)
+            return (move[0], move[1])
+        
+    #recover single int input    
+    elif (type(move) is int):
+        return (lim(move),0)
 
-    else:
-        #do not recover other non-tuples
-        print(str(move) + "non-tuple")
-        return (0,0)
+    #do not recover other non-tuples
+    return (0,0)
 
 def Match(A_bot, B_bot, turns_left):
     A_score=0
