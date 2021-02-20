@@ -6,12 +6,16 @@ import math
 #Sum-first scoring
 
 #import bots here
-from AC34 import AC34
-from Ran34 import Ran34
-from ExampleBot import ExampleBot
-from Grudge import Grudge
-from Piebot import Piebot
-bot_list=[ExampleBot, Grudge, Piebot, AC34, Ran34 ]
+from Brute import Brute
+from NaiveBot import NaiveBot
+from NiceBot import NiceBot
+from WesBot import WesBot
+from DarwinianEmptySeat import DarwinianEmptySeat
+from Kind_Bot import Kind_Bot
+from bayes import bayes
+from bot import bot
+
+bot_list=[Brute, NaiveBot,  NiceBot, WesBot, DarwinianEmptySeat, Kind_Bot, bayes, bot]
 
 #fill list with bots
 def Setup(bot_list, init_copy, round_count):
@@ -25,17 +29,23 @@ def Setup(bot_list, init_copy, round_count):
     
     #populate bot pool
     bot_counts=[]
+    round_score=[]
     for i in range(len(bot_list)):
         bot_counts.append(init_copy)
+        round_score.append(0)
+    Write(0, bot_list, round_score, bot_counts)
+    print(str(list(map(lambda x: x.__name__ , bot_list))))
         
     #run rounds
-    pool_size = len(bot_list) * init_copy
+    pool_size = len(bot_list) * init_copy    
     for Rnd in range(round_count):
+        if Rnd%16 == 0:
+            print(bot_counts)
+        print(str(Rnd)+" / "+str(round_count))
         round_score = Round(bot_list, bot_counts)
         bot_counts = Judge(bot_list, round_score, pool_size)
-        Write(Rnd, bot_list, round_score, bot_counts)
-        #print(Rnd)
-    print(bot_counts)             
+        Write(Rnd+1, bot_list, round_score, bot_counts)
+    print(bot_counts)              
 
 def Write(round_num, bot_names, round_scores, bot_counts):
     date=datetime.now().strftime('%Y-%m-%d')
@@ -177,6 +187,5 @@ def Judge (bot_list, bot_points, pool_size):
         bot_counts[bot_to_add]+=1
     return(bot_counts)
 
-Setup(bot_list,64,64)
-#Setup(bot_list,256,256)
+Setup(bot_list,64,256)
                                   
