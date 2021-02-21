@@ -14,8 +14,10 @@ from DarwinianEmptySeat import DarwinianEmptySeat
 from Kind_Bot import Kind_Bot
 from bayes import bayes
 from bot import bot
+from Goblin import Goblin
+from Grudge import Grudge
 
-bot_list=[Brute, NaiveBot,  NiceBot, WesBot, DarwinianEmptySeat, Kind_Bot, bayes, bot]
+bot_list=[Brute, Kind_Bot, bot, bayes, NaiveBot, NiceBot, WesBot, DarwinianEmptySeat, Goblin, Grudge]
 
 #fill list with bots
 def Setup(bot_list, init_copy, round_count):
@@ -39,12 +41,15 @@ def Setup(bot_list, init_copy, round_count):
     #run rounds
     pool_size = len(bot_list) * init_copy    
     for Rnd in range(round_count):
-        if Rnd%16 == 0:
+        if Rnd%4 == 0:
             print(bot_counts)
         print(str(Rnd)+" / "+str(round_count))
         round_score = Round(bot_list, bot_counts)
         bot_counts = Judge(bot_list, round_score, pool_size)
         Write(Rnd+1, bot_list, round_score, bot_counts)
+        if(max(bot_counts)>(pool_size*3/4)):
+            print("break") 
+            break;
     print(bot_counts)              
 
 def Write(round_num, bot_names, round_scores, bot_counts):
@@ -123,7 +128,7 @@ def Match(A_bot, B_bot, turns_left):
         A_moves.append(A_move)
         B_moves.append(B_move)
         
-    return(A_score, B_score)
+    return(A_score, B_score, A_moves, B_moves)
                  
 def Round (bot_list, bot_counts): #
     #inputs: bots, botcounts
@@ -187,5 +192,55 @@ def Judge (bot_list, bot_points, pool_size):
         bot_counts[bot_to_add]+=1
     return(bot_counts)
 
-Setup(bot_list,64,256)
+def Compare(bot_list, matches):
+    print(datetime.now().strftime('%Y-%m-%d-%H-%M-%S'))
+    for i in bot_list:
+        for j in bot_list:
+            bot_score=0
+            bot_claims=[]
+            bot_vetoes=[]
+            for n in range (144):
+                bot_claims.append([0,0,0,0,0,0,0,0])
+                bot_vetoes.append([0,0,0,0,0,0,0,0])
+            for k in range (matches):
+                turns=random.randint(112,144)
+                score=Match(i,j,turns)
+                bot_score+=score[0]
+                for m in range(len(score[2])):
+                    bot_claims[m][score[2][m][0]]+=1
+                    bot_vetoes[m][score[2][m][1]]+=1
+                print_score=round(bot_score/matches,4)
+            WriteMoves((str(i.__name__),str(j.__name__)),bot_claims,bot_vetoes,print_score)
+            print(str(i.__name__)+" vs. " + str(j.__name__)+ " score: " + str(print_score))
+    print(datetime.now().strftime('%Y-%m-%d-%H-%M-%S'))
+def WriteMoves(botnames, claims, vetoes, score):
+    date=datetime.now().strftime('%Y-%m-%d')
+    file=open(date+" Details.csv" ,"a+") 
+    file.write(str(botnames[0])+",vs,"+str(botnames[1]))
+    file.write("\n")
+    file.write("Avg,Score:,"+str(score)+"\n\n")
+    file.write("Claims,,Turn:,")
+    for t in range(144):
+        file.write(str(t+1)+",")
+    file.write("\n")
+    for r in range(8):
+        file.write(","+str(r)+",,")
+        for c in claims:
+            file.write(str(c[r])+",")
+        file.write("\n")
+    file.write("\n")    
+    file.write("Vetoes,Turn:,")
+    for t in range(144):
+        file.write(str(t+1)+",")
+    file.write("\n")
+    for r in range(8):
+        file.write(","+str(r)+",,")
+        for v in vetoes:
+            file.write(str(v[r])+",")
+        file.write("\n")
+    file.write("\n")
+    file.close()   
+            
+Compare(bot_list, 4096)
+#Setup(bot_list,4096,256)
                                   

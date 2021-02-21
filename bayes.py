@@ -58,7 +58,7 @@ def bayes(our_plays,their_plays):
         score = (our_plays[last][0]+their_plays[last][0]) < 8
         maxim = our_plays[last][0]+their_plays[last][0] == 7
         if score and maxim:
-            return our_plays[last]
+            return their_plays[last]
         if score:
             if cond < rate:
                 return (4,r.randint(6,7))
